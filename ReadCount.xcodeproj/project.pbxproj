@@ -59,6 +59,7 @@
 		9651E65C1D11717D0017AED2 /* Reader-Thumbs@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9651E6441D11717D0017AED2 /* Reader-Thumbs@2x.png */; };
 		9651E65D1D11717D0017AED2 /* Reader-Thumbs@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9651E6451D11717D0017AED2 /* Reader-Thumbs@3x.png */; };
 		9651E6601D1172460017AED2 /* ReadTimeCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 9651E65F1D1172460017AED2 /* ReadTimeCount.m */; };
+		967A24731D12A17400432874 /* CountDownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 967A24721D12A17400432874 /* CountDownViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,6 +140,8 @@
 		9651E6451D11717D0017AED2 /* Reader-Thumbs@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Reader-Thumbs@3x.png"; path = "PDFSource/Reader-Thumbs@3x.png"; sourceTree = "<group>"; };
 		9651E65E1D1172460017AED2 /* ReadTimeCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadTimeCount.h; sourceTree = "<group>"; };
 		9651E65F1D1172460017AED2 /* ReadTimeCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadTimeCount.m; sourceTree = "<group>"; };
+		967A24711D12A17400432874 /* CountDownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountDownViewController.h; sourceTree = "<group>"; };
+		967A24721D12A17400432874 /* CountDownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountDownViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +180,8 @@
 				9651E5A21D1150990017AED2 /* AppDelegate.m */,
 				9651E5A41D1150990017AED2 /* ViewController.h */,
 				9651E5A51D1150990017AED2 /* ViewController.m */,
+				967A24711D12A17400432874 /* CountDownViewController.h */,
+				967A24721D12A17400432874 /* CountDownViewController.m */,
 				9651E65E1D1172460017AED2 /* ReadTimeCount.h */,
 				9651E65F1D1172460017AED2 /* ReadTimeCount.m */,
 				9651E5A71D1150990017AED2 /* Main.storyboard */,
@@ -377,6 +382,7 @@
 				9651E61C1D1170D40017AED2 /* ReaderContentTile.m in Sources */,
 				9651E61E1D1170D40017AED2 /* ReaderDocument.m in Sources */,
 				9651E61B1D1170D40017AED2 /* ReaderContentPage.m in Sources */,
+				967A24731D12A17400432874 /* CountDownViewController.m in Sources */,
 				9651E62A1D1170D40017AED2 /* ThumbsMainToolbar.m in Sources */,
 				9651E6221D1170D40017AED2 /* ReaderThumbCache.m in Sources */,
 				9651E6201D1170D40017AED2 /* ReaderMainPagebar.m in Sources */,

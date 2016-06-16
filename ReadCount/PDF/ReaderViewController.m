@@ -284,8 +284,8 @@
 	if ([delegate respondsToSelector:@selector(dismissReaderViewController:)] == YES)
 	{
         
-//        [ReadManager saveReadFileInfo:document.fileName];//
-        
+        [ReadManager hideReadFile:document.fileName page:[NSString stringWithFormat:@"%ld", (long)currentPage]];
+        [ReadManager saveReadFileInfo:document.fileName];
         
 		[delegate dismissReaderViewController:self]; // Dismiss the ReaderViewController
 	}

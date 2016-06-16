@@ -156,36 +156,35 @@
 - (void)uploadFileData:(id)info
 {
     NSLog(@"上传");
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask,YES);
-//    NSString *cachesDir = [paths objectAtIndex:0];
-//    NSString *filepath  = [NSString stringWithFormat:@"%@/%@", cachesDir, kTimerFile];
-//    // 上传的数据
-//    NSMutableArray *ar = [NSMutableArray arrayWithContentsOfFile:filepath];
-//    NSURLSession *session = [NSURLSession sharedSession];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"接口地址"]];
-//    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//    [request setHTTPMethod:@"POST"];
-//    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-//    [request setTimeoutInterval:20];
-//    NSData * data = [NSJSONSerialization dataWithJSONObject:ar
-//                                                    options:NSJSONWritingPrettyPrinted
-//                                                      error:nil];
-//    NSURLSessionUploadTask * uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//        if (!error) {
-//            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-//            NSFileManager *fileManager = [NSFileManager defaultManager];
-//            // 删除刚刚的数据
-//            [fileManager removeItemAtPath:filepath error:nil];
-//            // 定时器关闭
-//            [self.timer invalidate]; self.timer = nil;
-//            NSLog(@"%@", dictionary);
-//        }else{
-//            [self startTimer];
-//            NSLog(@"上传失败");
-//        }
-//    }];
-//    [uploadTask resume];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask,YES);
+    NSString *cachesDir = [paths objectAtIndex:0];
+    NSString *filepath  = [NSString stringWithFormat:@"%@/%@", cachesDir, kTimerFile];
+    // 上传的数据
+    NSMutableArray *ar = [NSMutableArray arrayWithContentsOfFile:filepath];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.hih6.com/index.php?r=api"]];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setHTTPMethod:@"POST"];
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setTimeoutInterval:20];
+
+    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:ar];;
+    NSURLSessionUploadTask * uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            // 删除刚刚的数据
+            [fileManager removeItemAtPath:filepath error:nil];
+            // 定时器关闭
+            [self.timer invalidate]; self.timer = nil;
+            NSLog(@"上传成功%@", dictionary);
+        }else{
+            [self startTimer];
+            NSLog(@"上传失败");
+        }
+    }];
+    [uploadTask resume];
 }
 
 - (void)startTimer
