@@ -14,8 +14,10 @@
 
 + (ReadTimeCount *)shareInstance;
 
-- (void)startReadFile:(NSString *)file page:(NSString *)page startTime:(NSTimeInterval)startTime;
+- (void)showReadFile:(NSString *)file page:(NSString *)page;
 
-- (void)endReadFile:(NSString *)file page:(NSString *)page endTime:(NSTimeInterval)endTime;
+- (void)hideReadFile:(NSString *)file page:(NSString *)page;
+
+- (void)saveReadFileInfo:(NSString *)file;
 
 @end

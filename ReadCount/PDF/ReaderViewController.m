@@ -212,6 +212,11 @@
 
 	if (page != currentPage) // Only if on different page
 	{
+        
+        //timer
+        [ReadManager showReadFile:document.fileName page:[NSString stringWithFormat:@"%ld",(long)page]];
+        
+        
 		currentPage = page; document.pageNumber = [NSNumber numberWithInteger:page];
 
 		[contentViews enumerateKeysAndObjectsUsingBlock: // Enumerate content views
@@ -231,6 +236,8 @@
 {
 	if (page != currentPage) // Only if on different page
 	{
+        NSLog(@"===========page %ld", (long)page);
+        [ReadManager showReadFile:document.fileName page:[NSString stringWithFormat:@"%ld",(long)page]];
 		if ((page < minimumPage) || (page > maximumPage)) return;
 
 		currentPage = page; document.pageNumber = [NSNumber numberWithInteger:page];
@@ -276,6 +283,10 @@
 
 	if ([delegate respondsToSelector:@selector(dismissReaderViewController:)] == YES)
 	{
+        
+//        [ReadManager saveReadFileInfo:document.fileName];//
+        
+        
 		[delegate dismissReaderViewController:self]; // Dismiss the ReaderViewController
 	}
 	else // We have a "Delegate must respond to -dismissReaderViewController:" error
@@ -887,6 +898,7 @@
 
 - (void)pagebar:(ReaderMainPagebar *)pagebar gotoPage:(NSInteger)page
 {
+    //timer
     NSLog(@"page %ld", (long)page);
 	[self showDocumentPage:page];
 }

@@ -69,6 +69,7 @@
 #pragma mark - ReaderViewControllerDelegate
 - (void)dismissReaderViewController:(ReaderViewController *)viewController
 {
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
