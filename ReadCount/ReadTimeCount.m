@@ -45,7 +45,9 @@
         self.dic = [NSMutableDictionary dictionary];
         [self.dic setObject:file forKey:@"filename"];
         [self.dic setObject:@"yangshanli" forKey:@"reader"];
-        [self.dic setObject:[NSDate date] forKey:@"time"];
+        NSTimeInterval inter = [[NSDate date] timeIntervalSince1970];
+        NSString *t = [NSString stringWithFormat:@"%f", inter];
+        [self.dic setObject:t forKey:@"time"];
     }
     NSString *currentFile = [self.dic objectForKey:@"currentFile"];
     NSString *currentPage = [self.dic objectForKey:@"currentPage"];
@@ -161,30 +163,37 @@
     NSString *filepath  = [NSString stringWithFormat:@"%@/%@", cachesDir, kTimerFile];
     // 上传的数据
     NSMutableArray *ar = [NSMutableArray arrayWithContentsOfFile:filepath];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.hih6.com/index.php?r=api"]];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [request setHTTPMethod:@"POST"];
-    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-    [request setTimeoutInterval:20];
-
-    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:ar];;
-    NSURLSessionUploadTask * uploadTask = [session uploadTaskWithRequest:request fromData:data completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (!error) {
-            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-            NSFileManager *fileManager = [NSFileManager defaultManager];
-            // 删除刚刚的数据
-            [fileManager removeItemAtPath:filepath error:nil];
-            // 定时器关闭
-            [self.timer invalidate]; self.timer = nil;
-            NSLog(@"上传成功%@", dictionary);
-        }else{
-            [self startTimer];
-            NSLog(@"上传失败");
+    if (ar.count > 0) {
+        NSDictionary *dic = [ar objectAtIndex:0];
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            NSURLSession *session = [NSURLSession sharedSession];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://www.hih6.com/index.php?r=api"]];
+            [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+            [request setHTTPMethod:@"POST"];
+            [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+            [request setTimeoutInterval:20];
+            
+            NSData *data = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *s = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            s = [NSString stringWithFormat:@"data=%@",s];
+            NSData *dataa = [s dataUsingEncoding:NSUTF8StringEncoding];
+            NSURLSessionUploadTask * uploadTask = [session uploadTaskWithRequest:request fromData:dataa completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                if (!error) {
+                    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                    NSFileManager *fileManager = [NSFileManager defaultManager];
+                    // 删除刚刚的数据
+                    [fileManager removeItemAtPath:filepath error:nil];
+                    // 定时器关闭
+                    [self.timer invalidate]; self.timer = nil;
+                    NSLog(@"上传成功%@", string);
+                }else{
+                    [self startTimer];
+                    NSLog(@"上传失败");
+                }
+            }];
+            [uploadTask resume];
         }
-    }];
-    [uploadTask resume];
+    }
 }
 
 - (void)startTimer
